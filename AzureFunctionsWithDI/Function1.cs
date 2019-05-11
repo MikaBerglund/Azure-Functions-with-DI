@@ -1,21 +1,39 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using AzureFunctionsWithDI.Services;
+using Microsoft.Extensions.Configuration;
 
 namespace AzureFunctionsWithDI
 {
-    public static class Function1
+    public class Function1
     {
-        [FunctionName("Function1")]
-        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequest req, ILogger log)
+        public Function1(IConfiguration configuration, MyAService singleton, MyBService transient)
         {
-            return new OkResult();
+            // Azure Functions runtime now supports instance methods in order to support DI (since version 2.0.12265).
+
+            this.Configuration = configuration;
+
+            this.Singleton = singleton;
+            this.Transient = transient;
+        }
+
+        private readonly IConfiguration Configuration;
+        private readonly MyAService Singleton;
+        private readonly MyBService Transient;
+
+        [FunctionName("Function1")]
+        public IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequest req, ILogger log)
+        {
+
+            // Returning the instance IDs of the two injected services to demonstrate their lifetime.
+            return new ContentResult()
+            {
+                Content = $"Singleton instance ID: {this.Singleton.GetInstanceId()}\nTransient instance ID: {this.Transient.GetInstanceId()}",
+                StatusCode = 200
+            };
         }
     }
 }
