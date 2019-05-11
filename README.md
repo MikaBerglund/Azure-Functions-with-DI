@@ -19,7 +19,7 @@ It is pretty straight-forward to leverage dependency injection in your functions
 
 - Create a standard Azure Functions application (v2)
 - Add a reference to the [Microsoft.Azure.Functions.Extensions](https://www.nuget.org/packages/Microsoft.Azure.Functions.Extensions/) Nuget package
-- [Create a `Startup` class](https://docs.microsoft.com/en-us/azure/azure-functions/functions-dotnet-dependency-injection) with an assembly-level attribute that defines the startup class.
+- [Create a `Startup` class](https://docs.microsoft.com/en-us/azure/azure-functions/functions-dotnet-dependency-injection#registering-services) with an assembly-level attribute that defines the startup class.
 - Add your services in the `Configure` method of the `Startup` class.
 - Create your function methods as **instance methods** in non-static classes.
 - Add your services as parameters in the constructors on your function classes.
