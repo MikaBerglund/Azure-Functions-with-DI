@@ -12,6 +12,14 @@ Introduction
 [Dependency injection in Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-dotnet-dependency-injection) builds on the [dependency injection functionality in ASP.NET Core](https://docs.microsoft.com/en-gb/aspnet/core/fundamentals/dependency-injection). I suggest you scroll through those before digging deeper into this sample, if you're not that familiar with how dependency injection works in ASP.NET Core.
 
 
+Instance methods in Azure Functions
+-----------------------------------
+
+The main enabler for dependency injection in Azure Functions is the support for instance methods as function methods. The dependency injection functionality in ASP.NET Core builds on injecting dependencies through constructors, which implies that you need to have class instances to leverage dependency injection.
+
+Instance methods were introduced in [Azure Functions Runtime v2.0.12265](https://github.com/Azure/azure-functions-host/releases/tag/v2.0.12265).
+
+
 Steps to Enable Dependency Injection
 ------------------------
 
@@ -24,10 +32,3 @@ It is pretty straight-forward to leverage dependency injection in your functions
 - Create your function methods as **instance methods** in non-static classes.
 - Add your services as parameters in the constructors on your function classes.
 
-
-Instance methods in Azure Functions
------------------------------------
-
-The main enabler for dependency injection in Azure Functions is the support for instance methods as function methods. The dependency injection functionality in ASP.NET Core builds on injecting dependencies through constructors, which implies that you need to have class instances to leverage dependency injection.
-
-Instance methods were introduced in [Azure Functions Runtime v2.0.12265](https://github.com/Azure/azure-functions-host/releases/tag/v2.0.12265).
